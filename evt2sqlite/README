@@ -1,0 +1,68 @@
+Evt2Sqlite v0.1b - Convert BlackBerry Event Log files to SQLite databases
+
+Evt2Sqlite converts a BlackBerry Event Log file to an SQLite database to make it easier to parse and query 
+data about specific events.  The resulting database file has the following schema:
+
+TABLE: EVENT 
+Field: GUID STRING
+Field: EVDATE DATE
+Field: TYPE INTEGER
+Field: SEVERITY INTEGER
+Field: APP STRING
+Field: DATA STRING
+
+For convenience, use the accompanying batch or bash scripts to execute:
+
+e2s.sh evt.log output.db
+
+The example above will read the BlackBerry event log file 'evt.log' and convert it to an SQLite database file
+named 'output.db'
+
+To access the database, you can use a standard SQLite graphical client or a command line client:
+
+azazel:Evt2SQLite sheran$ sqlite3 output.db 
+SQLite version 3.6.12
+Enter ".help" for instructions
+Enter SQL statements terminated with a ";"
+sqlite> select count(*) from EVENT;
+1968
+sqlite> select datetime(EVDATE,'unixepoch') as date, DATA from EVENT where APP like '%phone%' limit 20;
+2011-05-09 06:41:03|UIE: no face detected
+2011-05-09 06:41:09|TOUCHSCREEN_MOVE (2) received without TOUCHSCREEN_DOWN (2)
+2011-05-09 06:41:09|PHONE-updating ONS
+2011-05-09 06:41:09|PHONE-ons=ROGERS
+2011-05-09 06:41:09|PHONE-updating ONS
+2011-05-09 06:41:09|PHONE-ons=ROGERS
+2011-05-09 06:41:09|TOUCHSCREEN_MOVE (2) received without TOUCHSCREEN_DOWN (2)
+2011-05-09 06:41:15|TOUCHSCREEN_UP (2) received without TOUCHSCREEN_DOWN (2)
+2011-05-09 06:41:16|StopCall,13
+2011-05-09 06:41:16|dAct
+2011-05-09 06:41:16|callsmpt; switchbg=true
+2011-05-09 06:41:16|Phone: audio source off
+2011-05-09 06:41:16|ACS Portrait
+2011-05-09 06:41:16|uAct
+2011-05-09 06:41:16|ACS Portrait
+2011-05-09 06:41:16|uAct
+2011-05-09 06:41:16|ACS Portrait
+2011-05-09 06:41:16|uAct
+2011-05-09 06:41:16|PHONE: callId 13 stops listening.
+2011-05-09 06:41:16|ACS Portrait
+sqlite> 
+
+License GPLv2:
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+
