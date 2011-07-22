@@ -2,3 +2,4 @@ This repo contains all the scripts I've written for doing stuff with BlackBerry 
 
 bbt - Script to parse out thumbs.key files copied from BlackBerry devices
 evt2sqlite - Tool to convert BlackBerry event log files into SQLite databases for easy analysis
+conparse - Tool to parse out the BlackBerry Messenger Contact Backup file -- BBM-(YY-MM-DD).con
