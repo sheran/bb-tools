@@ -1,0 +1,43 @@
+ConParse v1.0 - Parser for BlackBerry Messenger .con (contact) files
+
+ConParse is able to parse and generate reports from a BlackBerry Messenger .con file.  This file is generally only found on devices that are running 
+BlackBerry Messenger 5.0 and above.  To generate this file, you need to select "Back up contacts locally" on the device.  Then, a .con file is saved
+to either the Media Card or the device memory.  Usually, it will have a file name similar to "BBM-(YY-MM-DD).con"
+
+To run ConParse, you can run the convenience launcher files included (cparse.bat and cparse.sh)
+
+For example, to parse the "sheran.con" file:
+
+--
+azazel:conparse sheran$ ./cparse.sh sheran.con
+ConParse v1.0 - Copyright (C) 2011, Sheran A. Gunasekera <sheran@zensay.com>
+Parsing: sheran.con
+azazel:conparse sheran$ ls
+ConParse_report_1311338937301.html	lib
+README					profile_picture_1311338937322.jpg
+bin					sheran.con
+cparse.bat				src
+cparse.sh
+azazel:conparse sheran$
+--
+
+You will most likely be interested in the "ConParse_report_1311338937301.html" report.  
+
+
+License GPLv2:
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+
