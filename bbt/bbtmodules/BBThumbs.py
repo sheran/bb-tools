@@ -92,8 +92,8 @@ class Record:
 	
 	def thumb(self):
 		if self.data[0].encode("hex") == "00":
-			tmpdatalen = struct.unpack("H",self.data[3:5])
-			tmpdata = self.data[5:tmpdatalen[0]]
+			tmpdatalen = struct.unpack(">H",self.data[3:5])
+			tmpdata = self.data[5:tmpdatalen[0]+5]
 			return tmpdata
 		else:
 			return self.data
