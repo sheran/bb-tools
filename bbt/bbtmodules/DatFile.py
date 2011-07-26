@@ -19,6 +19,7 @@
 #
 #
 
+import time
 import struct
 
 class DatFile:
@@ -39,12 +40,11 @@ class DatFile:
 		# int Length of Path Name [2]
 		# int Length of File Name [3]
 		# int Length of Data [4]
-		# int Dunno [5]
+		# long Hex timestamp in milliseconds [5]
 		# int Dunno [6]
-		# int Dunno [7]
-		# byte 0x00 [8]
+		# byte 0x00 [7]
 		
-		header = struct.unpack(">B4sIIIIIIB",self.dat_file.read(30))
+		header = struct.unpack(">B4sIIIQIB",self.dat_file.read(30))
 		header_data = [] 
 		header_data.append(self.dat_file.read(header[2]))
 		header_data.append(self.dat_file.read(header[3]))
@@ -74,6 +74,12 @@ class Record:
 	
 	def path(self):
 		return self.header_data[0]
+	
+	def local_timestamp(self):
+		return time.ctime(self.header[5]/1000)+" (Local time)"
+
+	def gmt_timestamp(self):
+		return time.asctime(time.gmtime(self.header[5]/1000))+" (GMT)"
 	
 	def data_len(self):
 		return self.header[4]
