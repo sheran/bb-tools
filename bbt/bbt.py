@@ -77,7 +77,7 @@ def process(kf,outdir,extract,local):
 						timestamp = rec.local_timestamp()
 					else:
 						timestamp = rec.gmt_timestamp()
-					print "File "+rec.name()+" is at offset "+str(thumbs[key])+" in 'dat' file and was created on "+timestamp
+					print "+ "+rec.name()+" // "+timestamp+" // "+rec.sha1hash()
 		dfile.close()
 		print "*** "+os.path.split(kf)[1]+" has "+str(len(thumbs))+" records"
 		print "*** Processed "+str(ctr)+" records"
@@ -103,7 +103,7 @@ def oldthumbs(bbthumbs,outdir,extract,local):
 				timestamp = bbth.record(rec).local_timestamp()
 			else:
 				timestamp = bbth.record(rec).gmt_timestamp()
-			print "Found "+bbth.record(rec).name()+" with timestamp: "+timestamp
+			print "+ "+bbth.record(rec).name()+" // "+timestamp+" // "+bbth.record(rec).sha1hash()
 	else:
 		print bbthumbs+" is not a BlackBerry thumbs file!";
 		sys.exit(2)

@@ -21,6 +21,7 @@
 
 import time
 import struct
+import hashlib
 
 class DatFile:
 	def __init__(self,dat_file):
@@ -83,6 +84,11 @@ class Record:
 	
 	def data_len(self):
 		return self.header[4]
+	
+	def sha1hash(self):
+		s = hashlib.sha1()
+		s.update(self.data)
+		return s.hexdigest()
 	
 	def save_to_disk(self,path):
 		thumbs_file = open(path+"/"+self.name(),'wb')

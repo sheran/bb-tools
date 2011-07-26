@@ -21,6 +21,7 @@
 
 import struct
 import time
+import hashlib
 
 class BBThumbs:
 	def __init__(self,dat_file):
@@ -111,6 +112,11 @@ class Record:
 	
 	def gmt_timestamp(self):
 		return time.asctime(time.gmtime(self.header2[0]/1000))+" (GMT)"
+	
+	def sha1hash(self):
+		s = hashlib.sha1()
+		s.update(self.data)
+		return s.hexdigest()
 	
 	def save_to_disk(self,path):
 		thumbs_file = open(path+"/"+self.name(),'wb')
