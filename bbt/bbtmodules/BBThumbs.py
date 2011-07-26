@@ -20,6 +20,7 @@
 #
 
 import struct
+import time
 
 class BBThumbs:
 	def __init__(self,dat_file):
@@ -38,10 +39,9 @@ class BBThumbs:
 		# byte Dunno [1]
 		# byte Length of File Name [2]
 		# Header 2
-		# int Dunno [0]
+		# long Unix Timestamp in milliseconds [0]
 		# int Dunno [1]
-		# int Dunno [2]
-		# int Length of Data [3]
+		# int Length of Data [2]
 		record_offsets = []
 		record_offsets.append(self.dat_file.tell())
 		try:
@@ -52,8 +52,8 @@ class BBThumbs:
 				header1 = struct.unpack(">BBB",h1b)
 				header_data = [] 
 				header_data.append(self.dat_file.read(header1[2]))
-				header2 = struct.unpack(">IIII",self.dat_file.read(16))
-				self.dat_file.seek(header2[3],1)
+				header2 = struct.unpack(">QII",self.dat_file.read(16))
+				self.dat_file.seek(header2[2],1)
 				record_offsets.append(self.dat_file.tell())
 		except EOFError:
 			pass
@@ -66,15 +66,14 @@ class BBThumbs:
 		# byte Dunno [1]
 		# byte Length of File Name [2]
 		# Header 2
-		# int Dunno [0]
+		# long Unix Timestamp in milliseconds [0]
 		# int Dunno [1]
-		# int Dunno [2]
-		# int Length of Data [3]
+		# int Length of Data [2]
 		header1 = struct.unpack(">BBB",self.dat_file.read(3))
 		header_data = [] 
 		header_data.append(self.dat_file.read(header1[2]))
-		header2 = struct.unpack(">IIII",self.dat_file.read(16))
-		data = self.dat_file.read(header2[3])
+		header2 = struct.unpack(">QII",self.dat_file.read(16))
+		data = self.dat_file.read(header2[2])
 		return Record(header1,header2,header_data, data)
 		
 	def close(self):
@@ -106,6 +105,12 @@ class Record:
 	
 	def name(self):
 		return self.header_data[0]
+	
+	def local_timestamp(self):
+		return time.ctime(self.header2[0]/1000)+" (Local time)"
+	
+	def gmt_timestamp(self):
+		return time.asctime(time.gmtime(self.header2[0]/1000))+" (GMT)"
 	
 	def save_to_disk(self,path):
 		thumbs_file = open(path+"/"+self.name(),'wb')
